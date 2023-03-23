@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@NoArgsConstructor
 public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

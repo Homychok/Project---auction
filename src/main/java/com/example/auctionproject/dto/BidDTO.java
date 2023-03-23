@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
 public class BidDTO {
     @JsonIgnore //не выводит это поле
     private Long id;
