@@ -55,7 +55,7 @@ public class LotService {
         return countPrice * lot.getBidPrice() + lot.getStartPrice();
     }
 
-    private BidDTO findLastBid(Long id) {
+    private LotProjection findLastBid(Long id) {
         if (bidService.countTotalPrice(id) != 0) {
             return bidService.findLastBid(id);
         }

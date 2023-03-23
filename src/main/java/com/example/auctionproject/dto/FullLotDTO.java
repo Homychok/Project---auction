@@ -2,12 +2,13 @@ package com.example.auctionproject.dto;
 
 import com.example.auctionproject.enums.LotStatus;
 import com.example.auctionproject.models.Lot;
+import com.example.auctionproject.pojection.LotProjection;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 public class FullLotDTO {
-    private BidDTO lastBid;
+    private LotProjection lastBid;
     private Long id;
     private LotStatus status;
     private String title;

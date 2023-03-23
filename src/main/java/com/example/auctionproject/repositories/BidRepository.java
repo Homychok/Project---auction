@@ -11,7 +11,7 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     @Query(value = "SELECT bidder_name AS bidderName, bid_date AS bidDate FROM bid AS new_bid WHERE new_bid.lot_id = ?1 ORDER BY bid_date ASC LIMIT 1", nativeQuery = true)
     LotProjection findFirstBidderByBidDateMin(Long lotId);
     @Query(value = "SELECT bidder_name AS bidderName, bid_date AS bidDate FROM bid WHERE lot_id = ?1 ORDER BY bid_date DESC LIMIT 1", nativeQuery = true)
-    Bid findLastByBidDateMax(Long lotId);
+    LotProjection findLastByBidDateMax(Long lotId);
     @Query(value = "SELECT COUNT(*) FROM bid WHERE lot_id = ?1", nativeQuery = true)
     Long getCountNumberOfBidByLotId(Long lotId);
     @Query(value = "SELECT bidder_name AS bidderName, MAX(new_bid.bidder_count) AS maxCount, MAX(new_bid.last_bid) AS bidDate " +

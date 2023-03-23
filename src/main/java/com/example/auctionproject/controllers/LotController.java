@@ -127,7 +127,7 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
         return ResponseEntity.ok(lotService.getAllLotsByStatusOnPage(lotStatus, pageNumber));
     }
     @GetMapping("/export")
-    public ResponseEntity<String> downloadLotTable(HttpServletResponse response) throws IOException {
+    public void downloadLotTable(HttpServletResponse response) throws IOException {
         List<FullLotDTO> lots = lotService.getAllFullLots();
         StringWriter writer = new StringWriter();
         CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT);
@@ -149,7 +149,6 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
         pWriter.write(writer.toString());
         pWriter.flush();
         pWriter.close();
-        return ResponseEntity.ok().build();
     }
 
 

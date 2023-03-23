@@ -39,8 +39,8 @@ public class BidService {
     public Long countTotalPrice(Long lotId) {
         return bidRepository.getCountNumberOfBidByLotId(lotId);
     }
-    public BidDTO findLastBid(Long id) {
-        return BidDTO.fromBid(bidRepository.findLastByBidDateMax(id));
+    public LotProjection findLastBid(Long id) {
+        return bidRepository.findLastByBidDateMax(id);
     }
     public LotProjection findFrequent(Long lotId){
         return bidRepository.getLastBidderWithMaxNumbersOfBid(lotId);
