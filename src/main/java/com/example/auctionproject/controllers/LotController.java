@@ -29,9 +29,6 @@ public class LotController {
         this.lotService = lotService;
         this.bidService = bidService;
     }
-    /*
-1.Возвращает первого ставившего на этот лот
- */
     @GetMapping("/{id}/first")
     public ResponseEntity<?> getFirstBidder(@PathVariable Long id) {
         LotProjection firstBidder = bidService.getFirstBidderByLotId(id);
@@ -40,9 +37,6 @@ public class LotController {
         }
         return ResponseEntity.ok(firstBidder);
     }
-    /*
-2.Возвращает имя ставившего на данный лот наибольшее количество раз
-*/
     @GetMapping("/{id}/frequent")
     public ResponseEntity<?> getMostFrequentBidder(@PathVariable Long id) {
         if (lotService.getLastBidForLot(id) == null) {
@@ -53,9 +47,6 @@ public class LotController {
         }
             return ResponseEntity.ok(lotService.getLastBidForLot(id));
     }
-/*
-
- */
 @GetMapping("/{id}")
 public ResponseEntity<?> getFullLot(@PathVariable Long id){
     FullLotDTO fullLotDTO = lotService.getFullInfoAboutLot(id);
@@ -64,9 +55,6 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
     }
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Лот не найден");
 }
-    /*
-    4.Начать торги по лоту
-     */
     @PostMapping("/{id}/start")
     public ResponseEntity<?> updateStatusAuctionStart(@PathVariable Long id) {
         LotDTO updateInfoAboutLot = lotService.getLotById(id);
@@ -86,9 +74,6 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
         }
         return ResponseEntity.ok().build();
     }
-    /*
-5.Сделать ставку по лоту
- */
     @PostMapping("/{id}/bid")
     public ResponseEntity<?> createBid(@RequestBody BidDTOForFullLotDTO bidDTOForFullLotDTO,
                                                @PathVariable Long id) {
@@ -103,9 +88,6 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
         lotService.createBidder(id, bidDTOForFullLotDTO);
         return ResponseEntity.status(200).body("Ставка создана");
     }
-    /*
-6.Остановить торги по лоту
- */
     @PostMapping("/{id}/stop")
     public ResponseEntity<?> updateStatusAuctionStop(@PathVariable Long id) {
         LotDTO findInfoAboutLot = lotService.getLotById(id);
@@ -126,9 +108,6 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
         }
         return ResponseEntity.ok().build();
     }
-    /*
-7.Создает новый лот
- */
     @PostMapping
     public ResponseEntity<?> createLot(@RequestBody CreateLotDTO createLotDTO) {
         LotDTO createNewLot = lotService.createNewLot(createLotDTO);
@@ -138,9 +117,6 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
         }
         return ResponseEntity.ok(createNewLot);
     }
-    /*
-    8.Получить все лоты, основываясь на фильтре статуса и номере страницы
-     */
     @GetMapping
     public ResponseEntity<Collection<LotDTO>> findLots(@RequestParam LotStatus lotStatus,
                                                          @RequestParam(name = "page", required = false) Integer pageNumber) {
@@ -150,9 +126,6 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
 
         return ResponseEntity.ok(lotService.getAllLotsByStatusOnPage(lotStatus, pageNumber));
     }
-    /*
-9. Экспортировать все лоты в файл CSV
- */
     @GetMapping("/export")
     public void downloadLotTable(HttpServletResponse response) throws IOException {
         Collection<FullLotDTO> lots = lotService.getAllFullLots();
@@ -177,10 +150,6 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
         pWriter.flush();
         pWriter.close();
     }
-    /*
-3.Получить полную информацию о лоте
- */
-
 }
 
 
