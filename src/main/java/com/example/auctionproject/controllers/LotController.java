@@ -48,19 +48,14 @@ public class LotController {
         if (lotService.getLastBidForLot(id) == null) {
             return ResponseEntity.status(404).body("Лот не найден");
         }
+        if (lotService.getLotById(id).getStatus().equals(LotStatus.CREATED)) {
+            return ResponseEntity.status(404).body("Лот еще не участвует в аукционе");
+        }
             return ResponseEntity.ok(lotService.getLastBidForLot(id));
     }
 /*
-3.Получить полную информацию о лоте
+
  */
-//    @GetMapping("/{id}")
-//    public ResponseEntity<?> getFullLot(@PathVariable Long id) {
-//        FullLotDTO lotDTO = lotService.getFullLotById(id);
-//        if (lotDTO == null) {
-//            return ResponseEntity.status(404).body("Лот не найден");
-//        }
-//        return ResponseEntity.ok(lotDTO);
-//    }
 @GetMapping("/{id}")
 public ResponseEntity<?> getFullLot(@PathVariable Long id){
     FullLotDTO fullLotDTO = lotService.getFullInfoAboutLot(id);

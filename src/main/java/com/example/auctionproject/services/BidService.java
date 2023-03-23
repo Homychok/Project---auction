@@ -33,11 +33,11 @@ public class BidService {
     public LotProjection getFirstBidderByLotId (Long lotId) {
     return bidRepository.findFirstBidderByBidDateMin(lotId);
     }
-    public LotProjection getMaxBiddersOfBidByLotId(Long lotId) {
-        BidDTO bidDTO = new BidDTO();
-        bidDTO.setBidderName(bidRepository.findLastByBidDateMax(lotId).getBidderName());
-        bidDTO.setBidDate(bidRepository.findLastByBidDateMax(lotId).getBidDate());
-        return bidRepository.getLastBidderWithMaxNumbersOfBid(lotId);
+    public BidDTOForFullLotDTO getMaxBiddersOfBidByLotId(Long lotId) {
+        BidDTOForFullLotDTO bidDTOForFullLotDTO = new BidDTOForFullLotDTO();
+        bidDTOForFullLotDTO.setBidDate(bidRepository.findLastByBidDateMax(lotId).getBidDate());
+        bidDTOForFullLotDTO.setBidderName(bidRepository.findLastByBidDateMax(lotId).getBidderName());
+        return bidDTOForFullLotDTO;
     }
 
     public BidDTOForFullLotDTO createNewBidder (BidDTOForFullLotDTO bidDTOForFullLotDTO, LotDTO lotDTO) {
