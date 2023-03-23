@@ -6,9 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class FullLotDTO {
-    private BidDTOForFullLotDTO lastBid;
+    private BidDTO lastBid;
     private Long id;
     private LotStatus status;
     private String title;

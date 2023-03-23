@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("lot")
@@ -37,16 +38,15 @@ public class LotController {
         }
         return ResponseEntity.ok(firstBidder);
     }
-    @GetMapping("/{id}/frequent")
-    public ResponseEntity<?> getMostFrequentBidder(@PathVariable Long id) {
-        if (lotService.getLastBidForLot(id) == null) {
-            return ResponseEntity.status(404).body("Лот не найден");
-        }
+        @GetMapping("/{id}/frequent")
+    public ResponseEntity<LotProjection> getMostFrequentBidder(@PathVariable Long id) {
+        if (lotService.getLotById(id) == null) {
+            return ResponseEntity.notFound().build();        }
         if (lotService.getLotById(id).getStatus().equals(LotStatus.CREATED)) {
-            return ResponseEntity.status(404).body("Лот еще не участвует в аукционе");
-        }
+            return ResponseEntity.notFound().build();        }
             return ResponseEntity.ok(lotService.getLastBidForLot(id));
     }
+
 @GetMapping("/{id}")
 public ResponseEntity<?> getFullLot(@PathVariable Long id){
     FullLotDTO fullLotDTO = lotService.getFullInfoAboutLot(id);
@@ -127,8 +127,8 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
         return ResponseEntity.ok(lotService.getAllLotsByStatusOnPage(lotStatus, pageNumber));
     }
     @GetMapping("/export")
-    public void downloadLotTable(HttpServletResponse response) throws IOException {
-        Collection<FullLotDTO> lots = lotService.getAllFullLots();
+    public ResponseEntity<String> downloadLotTable(HttpServletResponse response) throws IOException {
+        List<FullLotDTO> lots = lotService.getAllFullLots();
         StringWriter writer = new StringWriter();
         CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT);
 
@@ -149,7 +149,10 @@ public ResponseEntity<?> getFullLot(@PathVariable Long id){
         pWriter.write(writer.toString());
         pWriter.flush();
         pWriter.close();
+        return ResponseEntity.ok().build();
     }
+
+
 }
 
 

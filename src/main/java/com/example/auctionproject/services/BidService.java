@@ -14,22 +14,11 @@ import java.time.LocalDateTime;
 @Service
 public class BidService {
     private BidRepository bidRepository;
-//    private LotService lotService;
 
     public BidService(BidRepository bidRepository) {
         this.bidRepository = bidRepository;
     }
-////@Autowired
-//    public BidService(BidRepository bidRepository, LotService lotService) {
-//        this.bidRepository = bidRepository;
-//        this.lotService = lotService;
-////    }
-//    public BidDTO createBid (BidDTO bidDTO) {
-//        Bid bid = BidDTO.toBid(bidDTO);
-//        bid.setBidderName(bid.getBidderName());
-//        Bid newBid = bidRepository.save(bid);
-//        return BidDTO.fromBid(newBid);
-//    }
+
     public LotProjection getFirstBidderByLotId (Long lotId) {
     return bidRepository.findFirstBidderByBidDateMin(lotId);
     }
@@ -47,14 +36,17 @@ public class BidService {
         return BidDTOForFullLotDTO.fromBid(bidRepository.save(bid));
     }
 
-    public Bid getLastBidderByLotId (Long lotId) {
-        return bidRepository.findLastByBidDateMax(lotId);
-    }
+//    public BidDTO getLastBidderByLotId (Long lotId) {
+//        return bidRepository.findLastByBidDateMax(lotId);
+//    }
 
     public Long countTotalPrice(Long lotId) {
         return bidRepository.getCountNumberOfBidByLotId(lotId);
     }
-    public BidDTOForFullLotDTO findLastBid(Long id) {
-        return BidDTOForFullLotDTO.fromBid(bidRepository.findLastByBidDateMax(id));
+    public BidDTO findLastBid(Long id) {
+        return BidDTO.fromBid(bidRepository.findLastByBidDateMax(id));
+    }
+    public LotProjection findFrequent(Long lotId){
+        return bidRepository.getLastBidderWithMaxNumbersOfBid(lotId);
     }
 }

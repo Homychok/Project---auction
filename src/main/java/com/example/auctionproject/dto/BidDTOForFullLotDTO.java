@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 @Data
-@NoArgsConstructor
 public class BidDTOForFullLotDTO {
     private Long id;
     private String bidderName;
@@ -27,7 +26,7 @@ public class BidDTOForFullLotDTO {
         Bid bid = new Bid();
         bid.setId(this.getId());
         bid.setBidderName(this.getBidderName());
-        bid.setBidDate(LocalDateTime.now());
+        bid.setBidDate(this.getBidDate());
         return bid;
     }
 }
