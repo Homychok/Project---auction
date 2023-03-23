@@ -36,10 +36,6 @@ public class BidService {
         return BidDTOForFullLotDTO.fromBid(bidRepository.save(bid));
     }
 
-//    public BidDTO getLastBidderByLotId (Long lotId) {
-//        return bidRepository.findLastByBidDateMax(lotId);
-//    }
-
     public Long countTotalPrice(Long lotId) {
         return bidRepository.getCountNumberOfBidByLotId(lotId);
     }

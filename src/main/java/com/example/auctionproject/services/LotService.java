@@ -28,7 +28,6 @@ public class LotService {
     private final HttpServletResponse response;
     private LotRepository lotRepository;
     private BidService bidService;
-    private BidRepository bidRepository;
 
     public LotService(LotRepository lotRepository, BidService bidService, HttpServletResponse response) {
         this.lotRepository = lotRepository;
@@ -102,21 +101,6 @@ public class LotService {
                 .peek(fullLotDTO -> fullLotDTO.setLastBid(findLastBid(fullLotDTO.getId())))
                 .collect(Collectors.toList());
     }
-
-//    public FullLotDTO getFullLotById (Long id) {
-//        Lot lot = lotRepository.findById(id).orElse(null);
-//        if (lot == null) {
-//            return null;
-//        }
-//        FullLotDTO fullLotDTO = FullLotDTO.fromLot(lot);
-//        fullLotDTO.setCurrentPrice(countCurrentPrice(id));
-//        fullLotDTO.setLastBid(getLastBidderByLotId(id));
-//        return fullLotDTO;
-//    }
-
-//    public BidDTOForFullLotDTO getLastBidderByLotId (Long lotId) {
-//        return bidService.getLastBidderByLotId(lotId);
-//    }
     public boolean checkMistakeInCreatingLot(CreateLotDTO createLotDTO) {
         if(createLotDTO.getTitle() == null || createLotDTO.getTitle().isBlank() ||
                 createLotDTO.getDescription() == null || createLotDTO.getDescription().isBlank() ||
